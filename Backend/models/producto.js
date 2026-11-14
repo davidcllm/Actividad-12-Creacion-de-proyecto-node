@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Definimos el esquema con los atributos solicitados
+// Se define el esquema con los atributos solicitados
 const productoSchema = new mongoose.Schema({
     nombre: { type: String, required: true },
     categoria: { type: String, required: true },
@@ -8,5 +8,5 @@ const productoSchema = new mongoose.Schema({
     existencia: { type: Number, required: true }
 });
 
-// Exportamos el modelo
+// exportar el modelo
 module.exports = mongoose.model('Producto', productoSchema);
