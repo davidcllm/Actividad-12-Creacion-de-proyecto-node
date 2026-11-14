@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+const productoRoutes = require('./routes/productoRoutes'); // Importar rutas
+
+//recibir datos en formato JSON en las peticiones POST
+app.use(express.json());
 
 // Rutas del API REST
 // 1. GET / Mostrar un mensaje de bienvenida
@@ -16,18 +20,8 @@ app.get('/saludo', (req, res) => {
     });
 });
 
-// 3. GET /productos se muestran todos los documentos almacenados
-app.get('/productos', async (req, res) => {
-    try {
-        // Recuperamos la instancia de la base de datos desde req.app.locals
-        const db = req.app.locals.db;
-        
-        // Buscamos todos los documentos en la colección 'productos'
-        const productos = await db.collection('productos').find().toArray();
-        res.json(productos);
-    } catch (error) {
-        res.status(500).json({ error: 'Hubo un error al obtener los productos.' });
-    }
-});
+
+// Conectar las rutas de productos (/productos)
+app.use('/productos', productoRoutes);
 
 module.exports = app;

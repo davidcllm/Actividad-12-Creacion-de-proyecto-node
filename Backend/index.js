@@ -1,21 +1,16 @@
 require('dotenv').config();
-const { MongoClient } = require('mongodb');
-const app = require('./app'); // Se importan los endpoints
+const mongoose = require('mongoose');
+const app = require('./app'); 
 
 const puerto = 3000;
 const url = process.env.MONGO_URI;
-const dbName = 'miTienda'; 
 
-// Conectar a MongoDB
-MongoClient.connect(url)
-  .then(client => {
-    console.log('Conectado exitosamente a MongoDB');
+// se conecta MongoDB con Mongoose
+mongoose.connect(url)
+  .then(() => {
+    console.log('Conectado exitosamente a MongoDB con Mongoose');
     
-    // Se inyecta la base de datos en las variables locales de la app
-    // para que las rutas en app.js puedan acceder a ella.
-    app.locals.db = client.db(dbName);
-
-    // Iniciar el servidor solo después de que la base de datos se haya conectado
+    // Iniciar el servidor
     app.listen(puerto, () => {
         console.log(`Servidor ejecutándose en http://localhost:${puerto}`);
     });
